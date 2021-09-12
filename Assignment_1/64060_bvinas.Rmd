@@ -1,0 +1,40 @@
+# Assignment 1
+
+### MIS 64060: Fundamentals of Machine Learning
+
+### Dr. Murali Shanker 
+
+### Brianna  Viñas
+
+### Due Date: Sepetember 12th, 2021 
+
+
+**Questions 1 and 2: ** _As the instructions indicated, I downloaded a datadet (biodataset) from the web for this assignment. The code that can be found below reads a .csv file (biodataset which was downloaded and imported into RStudio.) After the .csv file is read, the .csv file is assigned to the biodata variable. Once the .csv file is assigned to the biodata variable and the code is entered into RStudio (label assigned to the variable), the data for the .csv file will be printed. The source was specified in my code with the variable being given the name of biodata._ 
+
+```{r}
+ biodata <- read.csv("biostats.csv")
+ print(biodata) 
+```
+
+**Question 3** _The code that can be found below prints out descriptive statics for a selection of quantitative and categorical variables. When the code is entered, the following quantitative: weight, age, and height and categorical: name, sex, and class are displayed._ 
+
+```{r}
+ summary(biodata)
+```
+
+**Question 4** _The code that can be found below transforms one variable of the dataset. When the following code is used, the height variable is transformed as the height variable is no longer arranged in a random order. This is because once this code is entered (label assigned to the order variable 'height') , the height variable is now arranged in ascending order rather than in a random one._
+
+```{r}
+ df <-biodata[order(biodata$Height),]
+ df
+```
+
+**Question 5** _The code that can be found below plots at least one quantitative variable and one scatterplot. When the code is entered, a scatterplot is generated which plots age in correlation with an individual's height. The height of a person is a quantitative variable of the dataset. Therefore, a quantitative variable was plotted in the scatterplot with the use of this code._ 
+
+```{r}
+ plot(biodata$Height,biodata$Age,xlab="Height",ylab="Age")
+```
+
+**Question 6** _I have uploaded my R program for the assignment in addition to other associated datafiles to my git account. A separate repository was created for this class which was given the following naming convention which we were instructed to use in class._ 
+
+**Question 7** _I have copied and pasted my address to my repository in the assignment box located in Canvas as the instructions indicate for Assignment 1._ 
