@@ -1,0 +1,171 @@
+---
+title: "Assignment_2"
+Author: "Brianna Viñas" 
+Date: 10/04/2021
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+library(dplyr)
+library(caret)
+library(ISLR)
+library(FNN)
+library(gmodels)
+library(dummies)
+
+#I am going to read the .csv file in R. I will name the variable UniBank. 
+```{r}
+UniBank<- read.csv("UniversalBank.csv")
+
+#Now, I will proceed to remove the ID and zip code columns. 
+
+UBR<- UniBank [, c(-1,-5)]
+str(UBR)
+```
+
+#Next, I will create the dummy variable for the Education Column. 
+```{r} 
+Educate<- dummy(UBR$Education)
+tmp<- cbind(UBR, Educate)
+head(tmp)
+```
+#For this step, I will now take away the Education Column. 
+```{r}
+UBank<- tmp[c(-6)]
+head(UBank)
+```
+
+#This is where I will partition the data. Training =60% and the Validation= 40%.
+```{r}
+set.seed(18)
+Index <- createDataPartition(UBank$Income, p=0.6, list = FALSE)
+
+training_data <-UBank[Index,]
+dim(training_data)
+
+validation_data<-UBank[Index,]
+dim(validation_data)
+```
+#The data of the .csv will now be stabsardized using normalization. 
+```{r}
+norm_model<-preProcess(training_data, method= c("center", "scale"))
+head(norm_model)
+train_nf <- predict(norm_model, training_data)
+validation_nf<-predict(norm_model, validation_data)
+total_nf<- predict(norm_model,UBank)
+
+summary(total_nf)
+summary(train_nf)
+summary(validation_nf)
+
+set.seed(15)
+
+training_data<-train_nf[-7]
+head(training_data)
+train_outcome<-factor(training_data[,7], levels= c (0,1), labels= C ("reject", "accept"))
+head(train_outcome)
+valid_data<-validation_nf[-7]
+head(valid_data)
+validation_outcome<-factor(validation_data[7], levels = C (0,1), labels = C("reject","accept"))
+head(validation_outcome)
+total_data<-total_nf[-7]
+total_outcome<-factor(UBank[,7], levels = c(0,1), labels = c("reject", "accept"))
+head(total_outcome)
+```
+# Question 1 Age= 40, Experience=10, Income=84,Family= 2, CCAvg=2, Education_1= 0, Education_2=1, Education_3=0, Mortgage=0,Securties Account=0, CD Account = 0,Online=1, Credit Card= 1. Perform a K-NN Classification with all predicators except ID and zipcode using k=1.Remember to transform categorical predicators with more than two categories into dummy variables first. Specify the success class as 1 (loan acceptance), and use the default cutoff vaule of 0.5. How would this customer be classified? 
+
+#Answer Question 1: 
+```{r}
+TestTraining_Data <-c(40,10,84,2,2,0,0,0,1,1,0,1,0)
+knn_test<- knn(train_data, TestTraining_Data,cl=train_outcome, k=1, prob= TRUE)
+knn_test  
+
+```
+#Thus, the customer above would be classified as 0 as its nearest neighbors are classified as 0. 
+
+# Question 2 What is a choice of k that balances overfitting and ignoring the predictor information? 
+
+#Answer to Question 2: 
+```{r}
+bestk<-data.frame(k= seq(1,55,1), accuracy = rep(0,55)) 
+head(bestk)
+for (i in 1:55){
+  knn.pred<- knn(train_data,valid_data, cl= train_outcome, k=i)
+  bestk[i,2] <- confusionMatrix(knn.pred,validation_outcome)$overall [1]
+}
+head(bestk)
+bestk_fit<-bestk[which.max(bestk$accuracy),]
+bestk_fit
+```
+#Here the optimal value of k=4. 
+
+#Question # 3 Show the confusion matrix for the validation data that results from using the best k. 
+
+#Answer to Question 3
+```{r}
+knn.pred<-knn(train_data,valid_data, cl= train_outcome, k=bestk_fit$k, prob= TRUE)
+CrossTable(validation_outcome,knn.pred)
+```
+#Question 4 Consider the following customer: Age= 40, Experience=10, Income=84,Family= 2, CCAvg=2, Education_1= 0, Education_2=1, Education_3=0, Mortgage=0,Securties Account=0, CD Account = 0,Online=1, Credit Card= 1. Classify the customer using the best k. 
+
+#Answer to Question 4 
+```{r}
+TestTraining_Data<- C(40,10,84,2,2,0,0,0,1,1,0,1,0)
+Bestfitknn <-knn (train_data, TestTraining_Data, cl=train_outcome, k=bestk_fit$k,prob= TRUE)
+(Bestfitknn)
+
+totalknn<- knn(train_data,total_data,cl=train_outcome,k=bestk_fit$k,prob =TRUE)
+CrossTable(total_outcome, totalknn)
+```
+
+
+#Question 5 Repartition the data, this time training, validation, and test sets (50%), (30%), (20%). Apply the K-NN method with the k chosen above. Compare the confusion matrix of the test set with that of the training and validation sets. Comment on their differences and the reason. 
+
+#Answer to Question 5
+```{r}
+IndexNew1 <- createDataPartition(UBank$Income, p=0.5, list= FALSE)
+training_data2 = UBank [IndexNew1,]
+
+Remdata<- UBank[-IndexNew1,]
+IndexNew2 <- createDataPartition(Remdata$Income, p=0.6, list= FALSE) 
+validation_data2 = Remdata[IndexNew2,]
+test_data2 <-Remdata [-IndexNew2,]
+head(test_data2)
+```
+#Here is where I will perform normalization
+```{r}
+norm_values2 <-preProcess(training_data2,method= c ("center", "scale"))
+train_nf2 <- predict(norm_values2, training_data2)
+validation_nf2 <-predict(norm_values2, validation_data2)
+test_nf2 <-predict(norm_values2,test_data2)
+total_nf2 <-predict(norm_values2,UBank)
+training_data2 <- train_nf2 [,-7]
+training_outcome2 <- factor(validation_data2[,7],levels = C(0,1),labels = C( "Deny","Accept"))
+valid_data2<-validation_nf2 [,-7]
+validation_outcome2 <- factor(validation_data2[,7], levels= C(0,1), labels = C("Deny", "Accept"))
+TestTraining_data2 <-test_nf2[,-7]
+TestTraining_Outcome2 <-factor(TestTraining_data2[,7], levels= C(0,1), labels = C("Deny", "Accept")) 
+Total_data2 <- total_nf2 [,7]
+total_outcome2 <-factor(UBank[,7], levels = C(0,1), labels = C("Deny", "Accept"))
+```
+#Applying KNN with the optimal value of (K=4) to the Training and Validation Set #Validation
+```{r}
+knn_validation <-knn(train_data2,valid_data2,cl=training_outcome2,k=bestk_fit$k,prob= TRUE)
+crossTable(validation_outcome2,knn_validation,prop.chisq = FALSE)
+
+```
+#Applying KNN with the optomal value of (K=4) to the Training and Test Set
+#Test
+```{r}
+knn_testing <-Knn(training_data2,TestTraining_data2, cl= training_outcome2, k=bestk_fit$k, prob = TRUE)
+CrossTable (TestTraining_Outcome2,knn_testing,prop.chisq= FALSE)
+```
+#Applying KNN with the optimnal value of (K=4) to the entire dataset 
+#Total
+```{r}
+knn_total<- knn(train_data2, Total_data2, cl= training_outcome2, k=bestk_fit$k,prob=TRUE)
+CrossTable(total_outcome2,knn_total,prop.chisq= FALSE)
+```
+# The difference between repartition data and the confusion matrix is that the data appears to be more accurate as the optimal value of k was applied. 
