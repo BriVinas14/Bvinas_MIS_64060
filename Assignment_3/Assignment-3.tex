@@ -1,0 +1,500 @@
+% Options for packages loaded elsewhere
+\PassOptionsToPackage{unicode}{hyperref}
+\PassOptionsToPackage{hyphens}{url}
+%
+\documentclass[
+]{article}
+\usepackage{amsmath,amssymb}
+\usepackage{lmodern}
+\usepackage{ifxetex,ifluatex}
+\ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \usepackage{textcomp} % provide euro and other symbols
+\else % if luatex or xetex
+  \usepackage{unicode-math}
+  \defaultfontfeatures{Scale=MatchLowercase}
+  \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
+\fi
+% Use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\IfFileExists{microtype.sty}{% use microtype if available
+  \usepackage[]{microtype}
+  \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\makeatletter
+\@ifundefined{KOMAClassName}{% if non-KOMA class
+  \IfFileExists{parskip.sty}{%
+    \usepackage{parskip}
+  }{% else
+    \setlength{\parindent}{0pt}
+    \setlength{\parskip}{6pt plus 2pt minus 1pt}}
+}{% if KOMA class
+  \KOMAoptions{parskip=half}}
+\makeatother
+\usepackage{xcolor}
+\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
+\IfFileExists{bookmark.sty}{\usepackage{bookmark}}{\usepackage{hyperref}}
+\hypersetup{
+  pdftitle={Assignment 3},
+  pdfauthor={Brianna Viñas},
+  hidelinks,
+  pdfcreator={LaTeX via pandoc}}
+\urlstyle{same} % disable monospaced font for URLs
+\usepackage[margin=1in]{geometry}
+\usepackage{color}
+\usepackage{fancyvrb}
+\newcommand{\VerbBar}{|}
+\newcommand{\VERB}{\Verb[commandchars=\\\{\}]}
+\DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+% Add ',fontsize=\small' for more characters per line
+\usepackage{framed}
+\definecolor{shadecolor}{RGB}{248,248,248}
+\newenvironment{Shaded}{\begin{snugshade}}{\end{snugshade}}
+\newcommand{\AlertTok}[1]{\textcolor[rgb]{0.94,0.16,0.16}{#1}}
+\newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.77,0.63,0.00}{#1}}
+\newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\BuiltInTok}[1]{#1}
+\newcommand{\CharTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\CommentTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{#1}}
+\newcommand{\DecValTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ErrorTok}[1]{\textcolor[rgb]{0.64,0.00,0.00}{\textbf{#1}}}
+\newcommand{\ExtensionTok}[1]{#1}
+\newcommand{\FloatTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\ImportTok}[1]{#1}
+\newcommand{\InformationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\NormalTok}[1]{#1}
+\newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{#1}}}
+\newcommand{\OtherTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
+\newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\RegionMarkerTok}[1]{#1}
+\newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\StringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\VariableTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\WarningTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\usepackage{graphicx}
+\makeatletter
+\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
+\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
+\makeatother
+% Scale images if necessary, so that they will not overflow the page
+% margins by default, and it is still possible to overwrite the defaults
+% using explicit options in \includegraphics[width, height, ...]{}
+\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+% Set default figure placement to htbp
+\makeatletter
+\def\fps@figure{htbp}
+\makeatother
+\setlength{\emergencystretch}{3em} % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\setcounter{secnumdepth}{-\maxdimen} % remove section numbering
+\ifluatex
+  \usepackage{selnolig}  % disable illegal ligatures
+\fi
+
+\title{Assignment 3}
+\author{Brianna Viñas}
+\date{10/16/2021}
+
+\begin{document}
+\maketitle
+
+\hypertarget{r-markdown}{%
+\subsection{R Markdown}\label{r-markdown}}
+
+This is an R Markdown document. Markdown is a simple formatting syntax
+for authoring HTML, PDF, and MS Word documents. For more details on
+using R Markdown see \url{http://rmarkdown.rstudio.com}.
+
+When you click the \textbf{Knit} button a document will be generated
+that includes both content as well as the output of any embedded R code
+chunks within the document. You can embed an R code chunk like this:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\#required libraries }
+\FunctionTok{library}\NormalTok{(reshape2)}
+\FunctionTok{library}\NormalTok{(gmodels)}
+\FunctionTok{library}\NormalTok{(caret)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Loading required package: ggplot2
+\end{verbatim}
+
+\begin{verbatim}
+## Loading required package: lattice
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(ISLR)}
+\FunctionTok{library}\NormalTok{(e1071)}
+\end{Highlighting}
+\end{Shaded}
+
+\#Reading .CSV File and Normalization of the Data
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{UBank }\OtherTok{\textless{}{-}} \FunctionTok{read.csv}\NormalTok{(}\StringTok{"UniversalBank.csv"}\NormalTok{)}
+
+\NormalTok{UBank}\SpecialCharTok{$}\NormalTok{Personal.Loan }\OtherTok{\textless{}{-}} \FunctionTok{factor}\NormalTok{ (UBank}\SpecialCharTok{$}\NormalTok{Personal.Loan)}
+\NormalTok{UBank}\SpecialCharTok{$}\NormalTok{Online }\OtherTok{\textless{}{-}} \FunctionTok{factor}\NormalTok{(UBank}\SpecialCharTok{$}\NormalTok{Online)}
+\NormalTok{UBank}\SpecialCharTok{$}\NormalTok{CreditCard}\OtherTok{\textless{}{-}}\FunctionTok{factor}\NormalTok{ (UBank}\SpecialCharTok{$}\NormalTok{CreditCard)}
+\end{Highlighting}
+\end{Shaded}
+
+\#In this step, I will split the data into 60\% training and 40\%
+validation.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{set.seed}\NormalTok{(}\DecValTok{20}\NormalTok{)}
+\NormalTok{training.index}\OtherTok{\textless{}{-}}\FunctionTok{sample}\NormalTok{(}\FunctionTok{row.names}\NormalTok{(UBank), }\FloatTok{0.6}\SpecialCharTok{*}\FunctionTok{dim}\NormalTok{(UBank)[}\DecValTok{1}\NormalTok{])}
+\NormalTok{valid.index}\OtherTok{\textless{}{-}} \FunctionTok{setdiff}\NormalTok{(}\FunctionTok{row.names}\NormalTok{(UBank),training.index)}
+\NormalTok{train.df}\OtherTok{\textless{}{-}}\NormalTok{UBank [training.index,]}
+\NormalTok{valid.df }\OtherTok{\textless{}{-}}\NormalTok{ UBank[valid.index,]}
+\NormalTok{train }\OtherTok{\textless{}{-}}\NormalTok{ UBank[training.index,]}
+\NormalTok{valiatingtest }\OtherTok{\textless{}{-}}\NormalTok{ UBank [training.index,]}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{question-a-create-a-pivot-table-for-the-training-data-with-online-as-a-column-variable-cc-as-a-row-variable-and-loan-as-a-secondary-row-variable.-the-values-inside-the-table-should-convey-the-count.-in-r-use-functions-meltand-cast-or-function-table.-in-python-use-panda-dataframe-methods-meltand-pivot.}{%
+\section{Question A: Create a pivot table for the training data with
+Online as a column variable, CC as a row variable, and Loan as a
+secondary row variable. The values inside the table should convey the
+count. In R use functions melt()and cast(), or function table(). In
+Python, use panda dataframe methods melt()and
+pivot().}\label{question-a-create-a-pivot-table-for-the-training-data-with-online-as-a-column-variable-cc-as-a-row-variable-and-loan-as-a-secondary-row-variable.-the-values-inside-the-table-should-convey-the-count.-in-r-use-functions-meltand-cast-or-function-table.-in-python-use-panda-dataframe-methods-meltand-pivot.}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{melted.bank }\OtherTok{\textless{}{-}} \FunctionTok{melt}\NormalTok{(train, }\AttributeTok{id=}\FunctionTok{c}\NormalTok{(}\StringTok{"CreditCard"}\NormalTok{,}\StringTok{"Personal.Loan"}\NormalTok{), }\AttributeTok{variable=} \StringTok{"Online"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Warning: attributes are not identical across measure variables; they will be
+## dropped
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{cast.bank }\OtherTok{\textless{}{-}}\FunctionTok{dcast}\NormalTok{(melted.bank,CreditCard}\SpecialCharTok{+}\NormalTok{Personal.Loan}\SpecialCharTok{\textasciitilde{}}\NormalTok{Online)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Aggregation function missing: defaulting to length
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{cast.bank [,}\FunctionTok{c}\NormalTok{(}\DecValTok{1}\SpecialCharTok{:}\DecValTok{2}\NormalTok{,}\DecValTok{14}\NormalTok{)]}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##   CreditCard Personal.Loan Online
+## 1          0             0   1878
+## 2          0             1    212
+## 3          1             0    822
+## 4          1             1     88
+\end{verbatim}
+
+\hypertarget{question-b-consider-the-task-of-classifying-a-customer-who-owns-a-bank-credit-card-and-is-actively-using-online-banking-services.-looking-at-the-pivot-table-what-is-the-probability-that-this-customer-will-accept-the-loan-offer-this-is-the-probability-of-loan-acceptance-loan-1-conditional-on-having-a-bank-credit-card-cc-1-and-being-an-active-user-of-online-banking-services-online-1}{%
+\section{Question B: Consider the task of classifying a customer who
+owns a bank credit card and is actively using online banking services.
+Looking at the pivot table, what is the probability that this customer
+will accept the loan offer? {[}This is the probability of loan
+acceptance (Loan = 1) conditional on having a bank credit card (CC = 1)
+and being an active user of online banking services (Online =
+1){]}}\label{question-b-consider-the-task-of-classifying-a-customer-who-owns-a-bank-credit-card-and-is-actively-using-online-banking-services.-looking-at-the-pivot-table-what-is-the-probability-that-this-customer-will-accept-the-loan-offer-this-is-the-probability-of-loan-acceptance-loan-1-conditional-on-having-a-bank-credit-card-cc-1-and-being-an-active-user-of-online-banking-services-online-1}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{a}\OtherTok{=}\FunctionTok{table}\NormalTok{(train[,}\FunctionTok{c}\NormalTok{(}\DecValTok{10}\NormalTok{,}\DecValTok{13}\NormalTok{,}\DecValTok{14}\NormalTok{)])}
+\NormalTok{b}\OtherTok{\textless{}{-}}\FunctionTok{as.data.frame}\NormalTok{(a)}
+\NormalTok{b}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##   Personal.Loan Online CreditCard Freq
+## 1             0      0          0  769
+## 2             1      0          0   80
+## 3             0      1          0 1109
+## 4             1      1          0  132
+## 5             0      0          1  309
+## 6             1      0          1   41
+## 7             0      1          1  513
+## 8             1      1          1   47
+\end{verbatim}
+
+\hypertarget{question-c-create-two-separate-pivot-tables-for-the-training-data.-onewill-have-loan-rows-as-a-function-of-online-columns-and-the-other-will-have-loan-rows-as-a-function-of-cc.}{%
+\section{Question C: Create two separate pivot tables for the training
+data. Onewill have Loan (rows) as a function of Online (columns) and the
+other will have Loan (rows) as a function of
+CC.}\label{question-c-create-two-separate-pivot-tables-for-the-training-data.-onewill-have-loan-rows-as-a-function-of-online-columns-and-the-other-will-have-loan-rows-as-a-function-of-cc.}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# I will also be creating a pivot table for Loan (rows) as a function of Online (columns).}
+\FunctionTok{table}\NormalTok{(train[,}\FunctionTok{c}\NormalTok{(}\DecValTok{10}\NormalTok{,}\DecValTok{13}\NormalTok{)])}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##              Online
+## Personal.Loan    0    1
+##             0 1078 1622
+##             1  121  179
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\#This is the pivot table for Loan (rows) as a function of cc. }
+\FunctionTok{table}\NormalTok{ (train[,}\FunctionTok{c}\NormalTok{(}\DecValTok{10}\NormalTok{,}\DecValTok{14}\NormalTok{)])}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##              CreditCard
+## Personal.Loan    0    1
+##             0 1878  822
+##             1  212   88
+\end{verbatim}
+
+\hypertarget{question-d-part-1-compute-the-following-quantities-pa-b-means-the-probability-ofa-given-b-i.pcc-1-loan-1-the-proportion-of-credit-card-holders-among-the-loan-acceptors}{%
+\section{Question D, Part 1: Compute the following quantities {[}P(A
+\textbar{} B) means ``the probability ofA given B''{]}: i.P(CC = 1
+\textbar{} Loan = 1) (the proportion of credit card holders among the
+loan
+acceptors)}\label{question-d-part-1-compute-the-following-quantities-pa-b-means-the-probability-ofa-given-b-i.pcc-1-loan-1-the-proportion-of-credit-card-holders-among-the-loan-acceptors}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{P1}\OtherTok{\textless{}{-}}\FunctionTok{table}\NormalTok{(train[,}\FunctionTok{c}\NormalTok{(}\DecValTok{14}\NormalTok{,}\DecValTok{10}\NormalTok{)])}
+\NormalTok{P1}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##           Personal.Loan
+## CreditCard    0    1
+##          0 1878  212
+##          1  822   88
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\#Answer: 88/(88+212) = 0.29333333}
+\end{Highlighting}
+\end{Shaded}
+
+\#Question D, Part 2: .P(Online = 1 \textbar{} Loan = 1)
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{P2}\OtherTok{\textless{}{-}}\FunctionTok{table}\NormalTok{(train[,}\FunctionTok{c}\NormalTok{(}\DecValTok{13}\NormalTok{,}\DecValTok{10}\NormalTok{)])}
+\NormalTok{P2}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##       Personal.Loan
+## Online    0    1
+##      0 1078  121
+##      1 1622  179
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\#Answer: 179/(179+121)= 0.59666667}
+\end{Highlighting}
+\end{Shaded}
+
+\#Question D, Part 3: P(Loan = 1) (the proportion of loan acceptors)
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{P3}\OtherTok{\textless{}{-}}\FunctionTok{table}\NormalTok{(train[,}\DecValTok{10}\NormalTok{])}
+\NormalTok{P3}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+##    0    1 
+## 2700  300
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\#Answer:300/(300+2700)= 0.1}
+\end{Highlighting}
+\end{Shaded}
+
+\#Question D, Part 4: P(CC = 1 \textbar{} Loan = 0)
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{P4 }\OtherTok{\textless{}{-}}\FunctionTok{table}\NormalTok{(train[,}\FunctionTok{c}\NormalTok{(}\DecValTok{14}\NormalTok{,}\DecValTok{10}\NormalTok{)])}
+\NormalTok{P4}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##           Personal.Loan
+## CreditCard    0    1
+##          0 1878  212
+##          1  822   88
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\#Answer: 822/(822+1878)= 0.30444444}
+\end{Highlighting}
+\end{Shaded}
+
+\#Question D, Part 5 P(Online = 1 \textbar{} Loan = 0)
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{P5}\OtherTok{\textless{}{-}}\FunctionTok{table}\NormalTok{(train[,}\FunctionTok{c}\NormalTok{(}\DecValTok{13}\NormalTok{,}\DecValTok{10}\NormalTok{)])}
+\NormalTok{P5}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##       Personal.Loan
+## Online    0    1
+##      0 1078  121
+##      1 1622  179
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\#Answer: 1622/(1622+1078)= 0.60074074}
+\end{Highlighting}
+\end{Shaded}
+
+\#Question D, Part 6 P(Loan = 0)
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{P6}\OtherTok{\textless{}{-}}\FunctionTok{table}\NormalTok{(train[,}\DecValTok{10}\NormalTok{])}
+\NormalTok{P6}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+##    0    1 
+## 2700  300
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\#Answer: 2700/(2700+300)= 0.9}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{question-e-use-the-quantities-computed-above-to-compute-the-naive-bayes-probability-ploan-1-cc-1-online-1.}{%
+\section{Question E: Use the quantities computed above to compute the
+naive Bayes probability P(Loan = 1 \textbar{} CC = 1, Online =
+1).}\label{question-e-use-the-quantities-computed-above-to-compute-the-naive-bayes-probability-ploan-1-cc-1-online-1.}}
+
+\#Answer: \#Naive Bayes Probability=
+(P1\emph{P2}P3)/{[}(P1\emph{P2}P3)+(P4\emph{P5}P6){]} \#(0.29333333)*
+(0.59666667)\emph{(0.1)/(0.30444444)}(0.60074074)*(0.9)
+\#0.1750222/(0.01750222+0.16460296) \#0.0175022/0.18210518 \# Answer =
+0.0961105
+
+\#Question F: Compare this value with the one obtained from the pivot
+table in (B). Which is a more accurate estimate? \#Answer: \#The value
+obtained fromt the pivot table is 0.0942285 and the value obtained from
+the naive bayes is O.0961105. These values are almost equivalent to one
+another. However, the pivot table is a more accurate value. This is
+because each of the conditional probabilities are manually caluclated
+one by one.
+
+\#Question G: Which of the entries in this table are needed for
+computing P(Loan = 1 \textbar{} CC = 1, Online = 1)? Run naive Bayes on
+the data. Examine the model output on training data, and find the entry
+that corresponds to P(Loan = 1 \textbar{} CC = 1, Online = 1). Compare
+this to the number you obtained in (E). \#In this step, I will perform
+Naive Bayes on training data
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{table}\NormalTok{(train[,}\FunctionTok{c}\NormalTok{(}\DecValTok{10}\NormalTok{,}\DecValTok{13}\SpecialCharTok{:}\DecValTok{14}\NormalTok{)])}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## , , CreditCard = 0
+## 
+##              Online
+## Personal.Loan    0    1
+##             0  769 1109
+##             1   80  132
+## 
+## , , CreditCard = 1
+## 
+##              Online
+## Personal.Loan    0    1
+##             0  309  513
+##             1   41   47
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{training\_Naive}\OtherTok{\textless{}{-}}\NormalTok{train[,}\FunctionTok{c}\NormalTok{(}\DecValTok{10}\NormalTok{,}\DecValTok{13}\SpecialCharTok{:}\DecValTok{14}\NormalTok{)]}
+\NormalTok{UBank\_NB}\OtherTok{\textless{}{-}}\FunctionTok{naiveBayes}\NormalTok{(Personal.Loan}\SpecialCharTok{\textasciitilde{}}\NormalTok{.,}\AttributeTok{data=}\NormalTok{ training\_Naive) }
+\NormalTok{UBank\_NB}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+## Naive Bayes Classifier for Discrete Predictors
+## 
+## Call:
+## naiveBayes.default(x = X, y = Y, laplace = laplace)
+## 
+## A-priori probabilities:
+## Y
+##   0   1 
+## 0.9 0.1 
+## 
+## Conditional probabilities:
+##    Online
+## Y           0         1
+##   0 0.3992593 0.6007407
+##   1 0.4033333 0.5966667
+## 
+##    CreditCard
+## Y           0         1
+##   0 0.6955556 0.3044444
+##   1 0.7066667 0.2933333
+\end{verbatim}
+
+\#The value which is obtained is 0.0961105 after running Naive Bayes on
+data were the value calculated from E is 0.0961105. The two values are
+exactly the same.
+
+\end{document}

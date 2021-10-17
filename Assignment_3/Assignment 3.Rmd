@@ -2,7 +2,9 @@
 title: "Assignment 3"
 author: "Brianna Viñas"
 date: "10/16/2021"
-output: html_document
+output:
+  pdf_document: default
+  html_document: default
 ---
 
 ```{r setup, include=FALSE}
@@ -118,4 +120,4 @@ training_Naive<-train[,c(10,13:14)]
 UBank_NB<-naiveBayes(Personal.Loan~.,data= training_Naive) 
 UBank_NB
 ```
-#The value which is obtained is      after running Naive Bayes on data were the value calculated from E is 0.0961105. These two values are very similar.
+#The value which is obtained is 0.0961105 after running Naive Bayes on data were the value calculated from E is 0.0961105. The two values are exactly the same. 
