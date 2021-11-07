@@ -7,9 +7,8 @@ output:
   pdf_document: default
 ---
 ```{r}
-install.packages("dplyr")
 Phar<-read.csv("Pharmaceuticals.csv")
-install.packages("factoextra")
+
 library(cluster)
 library(factoextra)
 # In my first step, I have read the .csv file and installed the necessary packages and libraries needed in order to complete the assignment.After running the .csv file and labeling it as (Phar), I installed the factoextra and cluster packages and libraries. 
