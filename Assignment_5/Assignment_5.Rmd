@@ -1,0 +1,218 @@
+---
+title: "Assignment_5"
+author: "Brianna Viñas"
+date: "11/28/2021"
+output:
+  pdf_document: default
+  html_document: default
+---
+
+```{r} 
+#Adding the libraries necessary for the codes that will be used.
+library(cluster) #needed for the clustering algorithms 
+library(tidyverse)
+library(tidyverse)#needed in order to be able to manipulate the data
+library(factoextra) #needed in order to visualize the clustering taking place
+
+library(dendextend)# this library is used to compare the two dendrograms.
+library(knitr)
+```
+```{r}
+#Reading the Cereals .csv file. 
+Cer<- read.csv("Cereals.csv")
+```
+
+```{r} 
+#I will now proceed with removing all cereals with missing variables.
+sum(is.na(Cer))
+BV<-na.omit(Cer)
+sum(is.na(BV))# This was done to verify that the missing variables were removed.
+BV1<-BV[c(-1,-2,-3)]
+```
+
+```{r}
+#Now, I will be scaling the remaining data. 
+BV2<-scale(BV1)
+```
+
+```{r}
+# Question # 1: Apply hierarchical clustering to the data using Euclidean distance to the normalized measurements.Use Agnes to compare the clustering from single linkage, complete linkage, average linkage, and Ward. 
+
+# To answer this question, I will apply hierarchical clustering to the data using the Euclidean distance and the dissimilarity matrix. 
+
+dis<- dist(BV2, method= "euclidean")
+```
+
+```{r}
+#Continuation of answering question 1.
+#I will be continuing to answer question one by using Hierarchical Clustering with the use of complete linkage. 
+
+hc.complete<-hclust(dis, method = "complete")
+```
+
+```{r} 
+#continuation of answering question 1.
+# Now, I will plot the obtained dendogram. 
+plot(hc.complete,cex= 0.5, hang=-1)
+```
+
+```{r} 
+#continuation of answering question 1. 
+# I will now continue by using Agnes to compare the clustering from single linkage, complete linkage average linkage, and ward. 
+
+c_single<- agnes(BV2, method ="single")
+c_complete<- agnes (BV2, method = "complete")
+c_average <- agnes (BV2, method= "average")
+c_ward<- agnes(BV2, method = "ward")
+```
+
+```{r}
+# Continuation of answering question 1. 
+#Now, I will continue by comparing the agglomerative coefficients which includes the single, complete, average, and ward methods. 
+
+c_single$ac
+c_complete$ac
+c_average$ac
+c_ward$ac
+
+#Answer to Question # 1: By observing the aforementioned values it can be concluded that the best linkage method is ward with the agloermative coefficient of 0.9046042.
+```
+
+```{r} 
+# Before moving onto Question #2, I will visualize the dendogram using the ward method. 
+
+al<-pltree(c_ward, cex= 0.5, hang = -1, main = "dendrogram of agnes- wards method")
+```
+
+```{r}
+#Question # 2: How many clusters would you choose? 
+# First, I will create the distance matrix. 
+
+dis<- dist(BV2, method = "euclidean")
+```
+
+```{r}
+# Continuation of answering question 2. 
+c_sv<-hclust(dis,method = "ward.D2")
+```
+
+```{r}
+# Continuation of question 2. 
+# Here I will plot the dendrogram and take k=2 by observing the distance.
+
+plot(c_sv, cex=0.5)
+rect.hclust(c_sv, k=2, border = 1:2)
+```
+
+```{r}
+#Continuation of question 2. 
+# In order to identify the clusters, I will cut the dendrogram with cutree (). 
+
+cus<-cutree(c_sv, k=2)
+
+#Number of members in each cluster.
+
+table(cus)
+#Answer to Question # 2: It can be concluded that k=2 is cutting the longest path, so in this case I will select k=2. 
+```
+
+```{r}
+# Question # 3: # Comment on the structure of the clusters and on their stability. 
+
+```
+
+```{r}
+#Continuation of question 3. 
+# Now, I will set the seed. 
+
+set.seed (15)
+Cer_Ne <-Cer
+```
+
+```{r}
+#Continuation of question 3. 
+# To continue, I will remove any missing values that may be present in the data.
+
+cs<-na.omit(Cer_Ne)
+cs1<-cs[,c(-1,-2,-3)]
+cs2<-scale(cs1)
+cs3<-as.data.frame(cs2)
+```
+
+```{r}
+#Continuation of question 3. 
+#Now, I will divide the data and create the partitions. 
+
+c1<-cs[1:55,]
+c2<-cs[56:74,]
+```
+
+```{r} 
+#Continuation of question 3. 
+# I will now perform clustering uses Agnes () with single, complete, average, and ward with partitioned data. 
+
+b1<-agnes(scale(c1[,-c(1:3)]), method = "ward")
+b2<-agnes(scale(c1[,-c(1:3)]), method = "average")
+b3<-agnes(scale(c1[-c(1:3)]), method = "complete")
+b4 <-agnes(scale(c1[-c(1:3)]), method = "single")
+cbind(ward=b1$ac, average=b2$ac, complete=b3$ac, single=b4$ac)
+d3<-cutree(b1,k=2)
+```
+
+```{r} 
+# Continuation of question 3.
+# Here I will calculate the centers.
+
+bb<-as.data.frame(cbind(scale(c1[,-c(1:3)]),d3))
+cen1<-colMeans(bb[bb$d3==1,])
+cen2<-colMeans(bb[bb$d3==2,])
+```
+
+```{r}
+#Continuation of question 3. 
+# Here I will bind the two centers together. 
+
+cen<- rbind(cen1,cen2)
+cen
+```
+
+```{r} 
+#Continuation of question 3. 
+#Here I will calculate the distance the distance. 
+
+z<- as.data.frame(rbind(cen[,-14],scale(c2[,-c(1:3)])))
+x1<-get_dist(z)
+x2<-as.matrix(x1)
+a1<-data.frame(data=seq(1,nrow(c2),1), clusters =rep(0,nrow(c2)))
+               
+for(i in 1:nrow(c2))
+{
+  a1[i,2]<-which.min(x2[i+2,1:2])
+}
+  a1
+a3<-as.data.frame(cbind(BV2,cus))
+cbind(a3$cus[56:74],a1$clusters)
+table(a1$cus[56:74]==a1$clusters)
+#Answer to Question #3: From the aforementioned values, we can say that the clusters are rather stable. 
+```
+
+```{r} 
+#Question # 4: Healthy Cereals 
+
+n<-cbind(cs3,cus)
+n[n$cus==1,]
+n[n$cus==2,]
+```
+
+```{r}
+#Continuation of question # 4. 
+#Here I am going to calculate the mean ratings to determine the best cluster. 
+
+mean(n[n$cus==1,"rating"])
+mean(n[n$cus==2,"rating"])
+#Answer to question # 4: Here we can see from the above cluster analysis has high rating values. Thus, we can infer that this cluster has more nutrition values. So, Cluster1 is healthier for children. Given that we have used the distance metric algorithm we essentially needed to normalize the data as the factors of the data were different. Thus, we needed to scale it to similar features.
+```
+
+
+  
+
