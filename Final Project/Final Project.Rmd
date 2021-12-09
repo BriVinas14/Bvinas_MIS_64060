@@ -1,0 +1,49 @@
+---
+title: "Final Project_Customer Segmentation"
+author: "Brianna Viñas"
+date: "12/5/2021"
+output:
+  word_document: default
+  html_document: default
+  pdf_document: default
+---
+```{r}
+#First, I will read the .csv file. 
+library(factoextra)
+cust<- read.csv("Customers.csv")
+head(cust)
+```
+
+```{r}
+#Taking the quantitative variables in order to scale. 
+cust1<-cust[,4:5]
+head(cust1)
+```
+
+```{r} 
+#Finding the value of K-means using unsupervised learning. Wanted to use the simplest, but most accurate method possible. 
+fviz_nbclust(cust1,kmeans,method="wss")+geom_vline(xintercept = 2,linetype= 5)+labs(subtitle = "Elbow Method")
+fviz_nbclust(cust1,kmeans,method ="silhouette") + labs (subtitle = "Silhouette Method")
+#Here, I will set the seed for kmeans. 
+set.seed(1)
+k5<-kmeans(cust1, centers = 2, nstart = 25)
+k5$centers
+#Thus, K= 5, meaning that there will be 5 clusters. 
+```
+
+```{r}
+#Clustering the data from .csv file. 
+custclus<-kmeans(cust1,5)
+custclus
+#Now, I will visualize the clusters. 
+ggplot(cust1, aes(x = Annual.Income..k..,y = Spending.Score..1.100.)) +geom_point(stat = "identity", aes(color=as.factor(custclus$cluster)))+ scale_color_discrete(name="k",breaks=c("1", "2", "3", "4", "5"),labels=c("Cluster1", "Cluster2","Cluster3", "Cluster4", "Cluster5"))+ ggtitle("Customer Segmentation")
+#Thus, the following can be concluded:
+#Cluster 1 are customers who earn a medium annual income and have a medium annual spending rate. 
+#Cluster 2 customers who have a high annual income and a low annual spending rate. 
+#Cluster 3 costumers who have low annual incomes and a high annual spending rates.
+#Cluster 4 customers with high annual incomes and have high annual spending rates. 
+#Cluster 5 shows that customers with low annual incomes and low annual spending rates. 
+```
+
+
+
